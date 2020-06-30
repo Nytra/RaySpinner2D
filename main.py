@@ -48,7 +48,11 @@ mixer.music.play()
 start_time = pygame.time.get_ticks()
 spin_start_time = pygame.time.get_ticks()
 
+delta_time = pygame.time.get_ticks()
+
 while not game_over:
+
+    start_delta = pygame.time.get_ticks()
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -84,6 +88,8 @@ while not game_over:
 
     pygame.display.update()
 
-    clock.tick(999)
+    clock.tick(60)
+
+    delta_time = pygame.time.get_ticks() - start_delta
 
 pygame.quit()
