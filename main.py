@@ -14,7 +14,7 @@ from pygame import mixer
 NUM_LINES = 200
 WIDTH = 800
 HEIGHT = 600
-AUTO = False
+AUTO = True
 
 def random_point():
     x = random.randint(0, WIDTH - 1)
@@ -27,7 +27,7 @@ def random_colour():
     b = random.randint(0, 255)
     return r, g, b
 
-flags = HWSURFACE | DOUBLEBUF | FULLSCREEN
+flags = HWSURFACE | DOUBLEBUF
 bpp = 16
 
 pygame.init()
@@ -42,10 +42,11 @@ clock = pygame.time.Clock()
 line_origin = random_point()
 line_colour = random_colour()
 
-mixer.music.load("future_mornings.mp3")
+mixer.music.load("the_road_ahead.mp3")
 mixer.music.play()
 
 start_time = pygame.time.get_ticks()
+spin_start_time = pygame.time.get_ticks()
 
 while not game_over:
     
@@ -69,18 +70,20 @@ while not game_over:
         pygame.draw.line(screen, line_colour, line_origin, (x2, y2))
         ang += 360 / NUM_LINES
     
-    ang_init += 1
-    if ang_init >= 360:
-        ang_init = 0
+    if pygame.time.get_ticks() - spin_start_time > 1000 / 15:
+        spin_start_time = pygame.time.get_ticks()
+        ang_init += 1
+        if ang_init >= 360:
+            ang_init = 0
 
     # 100 beats per minute , 
-    if AUTO and (pygame.time.get_ticks() - start_time) > 60 / 100 * 1000:
+    if AUTO and (pygame.time.get_ticks() - start_time) > 60 / 107 * 1000:
         line_origin = random_point()
         line_colour = random_colour()
         start_time = pygame.time.get_ticks()
 
     pygame.display.update()
 
-    clock.tick(15)
+    clock.tick(999)
 
 pygame.quit()
