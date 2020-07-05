@@ -22,10 +22,8 @@ def random_point():
     return x, y
 
 def random_colour():
-    r = random.randint(0, 255)
-    g = random.randint(0, 255)
-    b = random.randint(0, 255)
-    return r, g, b
+    f = lambda: random.randint(0, 255)
+    return f(), f(), f()
 
 flags = HWSURFACE | DOUBLEBUF
 bpp = 16
